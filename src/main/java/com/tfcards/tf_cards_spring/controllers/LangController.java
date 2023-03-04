@@ -1,5 +1,8 @@
 package com.tfcards.tf_cards_spring.controllers;
 
+import com.tfcards.tf_cards_spring.services.lang.IQuotePhrasesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import com.tfcards.tf_cards_spring.services.IFlirtPhraseService;
 public class LangController {
 
     private final ApplicationContext springCtx;
+    private IQuotePhrasesService quotePhrasesService;
 
     // public LangController(IFlirtPhraseService pFlirtPhraseService) {
     public LangController(ApplicationContext pSpringCtx) {
@@ -26,4 +30,17 @@ public class LangController {
         return "lang/flirt_phrase";
     }
 
+    @RequestMapping("/quotes")
+    public String getQuotePhrase(Model mdl) {
+        var quotesLIst = this.quotePhrasesService.getAll();
+        mdl.addAttribute("quotesList", quotesLIst);
+        System.out.println(quotesLIst);
+        return "quote/list";
+    }
+
+    @Autowired
+    public void setQuotePhrasesService(IQuotePhrasesService quotePhrasesService) {
+        this.quotePhrasesService = quotePhrasesService;
+
+    }
 }
