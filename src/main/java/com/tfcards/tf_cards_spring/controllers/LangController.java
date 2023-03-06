@@ -34,11 +34,12 @@ public class LangController {
     public String getQuotePhrase(Model mdl) {
         var quotesLIst = this.quotePhrasesService.getAll();
         mdl.addAttribute("quotesList", quotesLIst);
-        System.out.println(quotesLIst);
+
         return "quote/list";
     }
 
     @Autowired
+    @Qualifier("quotePhraseEspService")
     public void setQuotePhrasesService(IQuotePhrasesService quotePhrasesService) {
         this.quotePhrasesService = quotePhrasesService;
 

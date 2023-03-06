@@ -15,7 +15,6 @@ import com.tfcards.tf_cards_spring.repositories.fake.MatchWordFakeFilter;
 import com.tfcards.tf_cards_spring.repositories.fake.QuoteFakeFilter;
 import org.springframework.stereotype.Service;
 
-@Service("QuotesPhraseService")
 public class QuotePhrasesEngService implements IQuotePhrasesService {
 
     private Set<Quote> quotesList;
@@ -71,7 +70,6 @@ public class QuotePhrasesEngService implements IQuotePhrasesService {
 
     @Override
     public Map<String, Set<Quote>> getAll(Optional<Map<String, Object>> filters) {
-
         FakeFilterBuildersFactory quoteFakeFilter = FakeFilterBuildersFactory.getFilterBuilder("quote");
         FakeFilter<Quote> fakeFilter = ((QuoteFakeFilter) quoteFakeFilter)
                 .addCategoryFilter(new MatchWordFakeFilter("transfomers"))
@@ -79,7 +77,6 @@ public class QuotePhrasesEngService implements IQuotePhrasesService {
                 .build();
 
         fakeFilter.filter(this.quotesList);
-
 
         Map<String, Set<Quote>> quotesMap = new HashMap<>();
         this.quotesList.stream()
@@ -95,7 +92,6 @@ public class QuotePhrasesEngService implements IQuotePhrasesService {
                         crrCategorySet.add(q);
                     }
                 });
-
         return quotesMap;
     }
 
