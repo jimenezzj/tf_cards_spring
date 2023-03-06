@@ -1,5 +1,7 @@
 package com.tfcards.tf_cards_spring.bootstrap;
 
+import com.tfcards.tf_cards_spring.datasource.FakeDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,8 @@ public class BootstrapData implements CommandLineRunner {
     private final FigureRepository figuresRepo;
     private final IFiguresCollectorRepo collectrsRepo;
     private final ICollectionGroupRepo collectionGrpRepo;
+    @Autowired
+    protected FakeDataSource fakeDataSource;
 
     public BootstrapData(FigureRepository pFigureRepo, IFiguresCollectorRepo pCollectorRepo, ICollectionGroupRepo pCollectionGrp) {
         this.figuresRepo = pFigureRepo;
@@ -26,11 +30,11 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         var grpBay = new CollectionGroup("Bayverse (Transformers Live Action Movie 1)", 2018);
-        
-        
+
+
         var fg1 = new Figure("Optimus Prime Bayverse 1", 2018);
         var colltor1 = new FiguresCollector("Sam Windwicky");
-        
+
         colltor1.getFigures().add(fg1);
         fg1.getFigureCollectors().add(colltor1);
         grpBay.getFigures().add(fg1);
@@ -49,10 +53,14 @@ public class BootstrapData implements CommandLineRunner {
         this.figuresRepo.save(fg2);
         this.collectrsRepo.save(colltor2);
         // this.collectionGrpRepo.save(grpBay);
-
         System.out.println("tfc =====>  Started in Bootstrap");
-        System.out.println("tfc =====>" + "FG1 number of figures: " + this.figuresRepo.count());
+        System.out.println("tfc =====>" + "number of figures: " + this.figuresRepo.count());
+        System.out.println("tfc =====> " +
+                String.format("user(data_user): %s, password(data_user): %s, jdbcUrl(data_user): %s,",
+                        this.fakeDataSource.getUser(), this.fakeDataSource.getPassword(), this.fakeDataSource.getJbcUrl())
+        );
 
     }
+
 
 }
