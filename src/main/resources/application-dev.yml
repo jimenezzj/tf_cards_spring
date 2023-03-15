@@ -1,0 +1,10 @@
+# dev profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+com:
+  tfcards:
+    user: ymlDevTransformerUser
+    password: ymlDevTransformerUser
+    jdbcurl: ymlDevTfCardsDbSource

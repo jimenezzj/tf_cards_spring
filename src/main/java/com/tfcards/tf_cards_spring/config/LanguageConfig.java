@@ -15,9 +15,21 @@ public class LanguageConfig {
 
     @Bean
     FakeDataSource fakeDataSrc(
+            @Value("${com.tfcards.fake.user}") String pUser,
+            @Value("${com.tfcards.fake.password}") String pPassword,
+            @Value("${com.tfcards.fake.jdbcurl}") String pJdbcUrl) {
+        var fakeDatasrc = new FakeDataSource();
+        fakeDatasrc.setUser(pUser);
+        fakeDatasrc.setPassword(pPassword);
+        fakeDatasrc.setJbcUrl(pJdbcUrl);
+        return fakeDatasrc;
+    }
+
+    @Bean
+    FakeDataSource fakeYmlDataSrc(
             @Value("${com.tfcards.user}") String pUser,
             @Value("${com.tfcards.password}") String pPassword,
-            @Value("${com.tfcards.jdcurl}") String pJdbcUrl) {
+            @Value("${com.tfcards.password}") String pJdbcUrl) {
         var fakeDatasrc = new FakeDataSource();
         fakeDatasrc.setUser(pUser);
         fakeDatasrc.setPassword(pPassword);
