@@ -19,8 +19,14 @@ spring:
   config:
     activate:
       on-profile: local
+  jpa:
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:h2:mem:tfcardsdb
 com:
   tfcards:
     user: ymlLocalTransformerUser
     password: ymlLocalTransformerUser
     jdbcurl: ymlLocalTfCardsDbSource
+server:
+  port: 8082
