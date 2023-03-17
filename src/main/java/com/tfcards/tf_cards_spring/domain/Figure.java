@@ -3,29 +3,35 @@ package com.tfcards.tf_cards_spring.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Figure {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
 
-    @ManyToOne
-    private CollectionGroup collectGrp;
-    
     private int releaseYear;
+
+    @Lob
+    private String image;
+
+    @Enumerated(EnumType.STRING)
+    private EFigureSize size;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ItemNotes notes;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<FigureAccessory> accessories;
 
     @ManyToMany(mappedBy = "figures")
     private Set<FiguresCollector> figureCollectors;
+
+    @ManyToOne
+    private CollectionGroup collectGrp;
 
     public Figure() {
     }
@@ -33,7 +39,6 @@ public class Figure {
     public Figure(String name, int releaseYear) {
         this.name = name;
         this.releaseYear = releaseYear;
-        this.figureCollectors = new HashSet<>();
         this.collectGrp = null;
     }
 

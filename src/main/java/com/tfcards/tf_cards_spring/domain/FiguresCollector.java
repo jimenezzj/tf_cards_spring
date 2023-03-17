@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "figures_collectors")
+@Entity(name = "collector")
 public class FiguresCollector {
 
     @Id
@@ -22,9 +22,9 @@ public class FiguresCollector {
 
     @ManyToMany
     @JoinTable(
-        name = "figures_fcollector", 
-        joinColumns = @JoinColumn(name = "figures_collectors_id"), 
-        inverseJoinColumns = @JoinColumn(name = "figure_id")
+            name = "figures_collectors",
+            joinColumns = @JoinColumn(name = "figures_collectors_id"),
+            inverseJoinColumns = @JoinColumn(name = "figure_id")
     )
     private Set<Figure> figures;
 
@@ -57,14 +57,6 @@ public class FiguresCollector {
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTfCustomer() {

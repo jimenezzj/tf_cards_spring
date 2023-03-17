@@ -4,15 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tfcards.tf_cards_spring.repositories.FigureRepository;
+import com.tfcards.tf_cards_spring.repositories.IFigureRepository;
 
 @Controller
 public class FiguresController {
 
-    private FigureRepository figuresRepo;
+    private IFigureRepository figuresRepo;
 
-    public FiguresController(FigureRepository pFigureRepository) {
-        this.figuresRepo = pFigureRepository;
+    public FiguresController(IFigureRepository pIFigureRepository) {
+        this.figuresRepo = pIFigureRepository;
     }
 
     @RequestMapping(path = "/figures")
