@@ -1,15 +1,14 @@
 package com.tfcards.tf_cards_spring.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-
 @Entity
+@Data
+@EqualsAndHashCode(exclude = {"figure"})
 public class FigureAccessory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,44 +23,10 @@ public class FigureAccessory {
     @ManyToOne
     private Figure figure;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public FigureAccessory(String name, String description, BigDecimal cost) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
         this.cost = cost;
-    }
-
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public Figure getFigure() {
-        return figure;
-    }
-
-    public void setFigure(Figure figure) {
-        this.figure = figure;
     }
 
 }
