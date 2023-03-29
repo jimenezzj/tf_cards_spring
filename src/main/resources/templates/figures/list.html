@@ -8,18 +8,40 @@
 </head>
 
 <body>
-    <h1>Figures List</h1>
-    <div>
-        <ul>
-            <li th:each="fg : ${figures}">
-                <p>
-                    <span th:text="${fg.id}"></span> <strong th:text="${fg.name}"></strong>
+<style>
+    .tf-btn-link {
+        padding: .5rem .5rem;
+        text-decoration: underline;
+        border: 1px solid #dd5a4c;
+        transition: background-color ease-in 150ms;
+        color: #74170f;
+        font-weight: bold;
+    }
+    .tf-btn-link:hover {
+        background-color: #f9beb8;
+    }
+</style>
+<h1>Figures List</h1>
+<a th:href="@{/figures/new}" class="tf-btn-link">Create</a>
+<div>
+    <ul>
+        <li th:each="fg : ${figures}" style="
+            text-decoration: unset;
+            border: 3px solid salmon;
+            display: flex;
+            flex-flow: column wrap;
+        ">
+            <div>
+                <p style="display: inline-flex; margin-right: 1.5rem">
+                    <strong th:text="${fg.name} + ' ('+ ${fg.id} + ')'"></strong>
                 </p>
-                <p th:text="${fg.collectGrp?.name} ?: 'No Group'"></p>
-                <small th:text="${fg.releaseYear}"></small>
-            </li>
-        </ul>
-    </div>
+                <a th:href="@{'/figures/update/' + ${fg.id}}" class="tf-btn-link">Edit</a>
+            </div>
+            <p th:text="${fg.collectGrp?.name} ?: 'No Group'"></p>
+            <small th:text="${fg.releaseYear}"></small>
+        </li>
+    </ul>
+</div>
 </body>
 
 </html>
