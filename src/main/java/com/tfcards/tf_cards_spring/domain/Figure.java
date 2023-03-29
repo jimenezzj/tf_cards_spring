@@ -17,7 +17,7 @@ public class Figure {
     private String name;
     private int releaseYear;
     @Lob
-    private String image;
+    private Byte[] image;
 
     @Enumerated(EnumType.STRING)
     private EFigureSize size;

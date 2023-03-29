@@ -36,6 +36,7 @@
                     <strong th:text="${fg.name} + ' ('+ ${fg.id} + ')'"></strong>
                 </p>
                 <a th:href="@{'/figures/update/' + ${fg.id}}" class="tf-btn-link">Edit</a>
+                <a th:href="@{'/figures/' + ${fg.id}}" class="tf-btn-link">Show</a>
             </div>
             <p th:text="${fg.collectGrp?.name} ?: 'No Group'"></p>
             <small th:text="${fg.releaseYear}"></small>

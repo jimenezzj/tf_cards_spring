@@ -6,11 +6,22 @@
 </head>
 <body>
 <div th:object="${figure}">
-    <p>
-        <span th:text="*{id}"></span> <strong th:text="*{name}"></strong>
-    </p>
-    <p th:text="*{collectGrp?.name} ?: 'No Group'"></p>
-    <small th:text="*{releaseYear}"></small>
+    <!--    <p th:text="${figure.getImageByteArr()}"></p>-->
+    <div style="margin: 1rem;">
+        <div style="padding: 1rem 0;max-width: 6rem;">
+            <img th:if="${figure.getImageByteArr()}" src=""
+                 th:src="@{'/figures/image/' + ${figure.id} + '?mimeType=png'}"
+                 alt="figure image" th:alt="${figure.name} + 'image'" style="width: 100%; height: auto;">
+            <span th:unless="${figure.getImageByteArr()}"
+                  style="padding: 2.5rem; background-color: #f38173; display: inline-flex"></span>
+        </div>
+        <p>
+            <span th:text="*{id}"></span> <strong th:text="*{name}"></strong>
+        </p>
+        <p th:text="*{collectGrp?.name} ?: 'No Group'"></p>
+        <small th:text="*{releaseYear}"></small>
+    </div>
+    <a th:href="@{/figures}" class="tf-btn-link" style="padding: 1rem 0;"><- Back</a>
 </div>
 </body>
 </html>
