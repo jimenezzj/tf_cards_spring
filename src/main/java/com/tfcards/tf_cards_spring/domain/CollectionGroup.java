@@ -1,13 +1,15 @@
 package com.tfcards.tf_cards_spring.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "collection_groups")
-@Data
+@Getter
+@Setter
 public class CollectionGroup {
 
     @Id
@@ -19,7 +21,7 @@ public class CollectionGroup {
 
     @OneToMany
     @JoinColumn(name = "collect_grp_id")
-    private Set<Figure> figures;
+    private Set<Figure> figures = new HashSet<>();
 
     public CollectionGroup() {
     }

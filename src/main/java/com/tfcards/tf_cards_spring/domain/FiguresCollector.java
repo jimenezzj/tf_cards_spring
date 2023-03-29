@@ -1,15 +1,8 @@
 package com.tfcards.tf_cards_spring.domain;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity(name = "collector")
 public class FiguresCollector {
@@ -59,6 +52,14 @@ public class FiguresCollector {
         return true;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTfCustomer() {
         return tfCustomer;
     }
@@ -71,7 +72,7 @@ public class FiguresCollector {
         return figures;
     }
 
-    private void setFigures(Set<Figure> figures) {
+    public void setFigures(Set<Figure> figures) {
         this.figures = figures;
     }
 

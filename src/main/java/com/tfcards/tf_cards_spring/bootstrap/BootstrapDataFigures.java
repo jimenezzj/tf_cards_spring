@@ -58,8 +58,11 @@ public class BootstrapDataFigures implements ApplicationListener<ContextRefreshe
         fg1.addAccessory(new FigureAccessory("Optimus Bayverve Hooks", "Glow orange color", BigDecimal.valueOf(5.0)));
         fg1.addAccessory(new FigureAccessory("Optimus Bayverve DOM Guns & Blades", "Set of weapons used by Optimus in DOM", BigDecimal.valueOf(15.99)));
         fg1.addAccessory(new FigureAccessory("Optimus Bayverve DOM Wings", "Trailer wings used by Optimus in DOM", BigDecimal.valueOf(20.99)));
+        fg1.setReleaseYear(2018);
 
         fgsList.add(fg1);
+//        fgsList.add(fg2);
+//        fgsList.add(fg3);
 //        this.figureRepo.save(fg1);
 
 //        fg1.getFigureCollectors().add(colltor1);

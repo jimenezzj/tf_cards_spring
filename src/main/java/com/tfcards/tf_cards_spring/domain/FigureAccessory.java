@@ -29,4 +29,7 @@ public class FigureAccessory {
         this.cost = cost;
     }
 
+    public FigureAccessory() {
+
+    }
 }
