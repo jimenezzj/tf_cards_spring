@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 // @Profile({"ESP", "default"})
-@Profile("ESP")
+@Profile({ "ESP", "default" })
 @Service("FlirtPhraseServImpl")
 public class FlirtPhraseEspService implements IFlirtPhraseService {
 
@@ -22,8 +22,7 @@ public class FlirtPhraseEspService implements IFlirtPhraseService {
     @Override
     public String getRandFlirtPhrase() {
         return this.frases.get(
-            new Random().nextInt(0, this.frases.size())    
-        );
+                new Random().nextInt(0, this.frases.size()));
     }
 
 }
