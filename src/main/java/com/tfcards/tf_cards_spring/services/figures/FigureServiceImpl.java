@@ -4,6 +4,7 @@ import com.tfcards.tf_cards_spring.commands.FigureCommand;
 import com.tfcards.tf_cards_spring.converters.FigureCommandToFigure;
 import com.tfcards.tf_cards_spring.converters.FigureToFigureCommand;
 import com.tfcards.tf_cards_spring.domain.Figure;
+import com.tfcards.tf_cards_spring.exceptions.NotFoundException;
 import com.tfcards.tf_cards_spring.repositories.IFigureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class FigureServiceImpl implements IFiguresService {
     @Override
     public Figure getById(Long id) {
         var foundFg = this.figuresRepo.findById(id);
-        if (foundFg.isEmpty()) throw new RuntimeException("Figure was not found!");
+        if (foundFg.isEmpty()) throw new NotFoundException("Figure was not found!");
         return foundFg.get();
     }
 
