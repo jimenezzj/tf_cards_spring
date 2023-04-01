@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import org.springframework.stereotype.Service;
 
 import com.tfcards.tf_cards_spring.domain.UserTf;
+import com.tfcards.tf_cards_spring.exceptions.UserNotFoundException;
 
 @Service
 public class UserServiceListImpl implements IUserService {
@@ -27,14 +28,17 @@ public class UserServiceListImpl implements IUserService {
         Predicate<? super UserTf> findById = user -> user.getId() == id;
         var foundUser = usersList.stream().filter(findById).findFirst();
         if (!foundUser.isPresent())
-            throw new RuntimeException(String.format("User with id: %d was not found!", id));
+            throw new UserNotFoundException(String.format("User with id: %d was not found!", id));
         return foundUser.get();
     }
 
     @Override
     public UserTf save(UserTf newUser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        newUser.setId(++listSize);
+        // TODO: this can be improved
+        if (!usersList.add(newUser))
+            throw new RuntimeException("Something went wrong while trying to save the user;");
+        return newUser;
     }
 
     @Override
