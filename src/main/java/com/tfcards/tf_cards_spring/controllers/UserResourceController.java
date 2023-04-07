@@ -1,8 +1,12 @@
 package com.tfcards.tf_cards_spring.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +29,11 @@ public class UserResourceController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public Set<UserTf> getAll() {
+        return this.userService.getAll();
+    }
+
     @GetMapping(path = "/{id}")
     public UserTf getUser(@PathVariable String id) {
         var foundUser = this.userService.getUser(Long.valueOf(id));
@@ -40,5 +49,15 @@ public class UserResourceController {
                 .toUri();
         return ResponseEntity.created(crrLocation).build();
         // return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public Map<String, Object> delete(@PathVariable String id) {
+        Map<String, Object> response = new HashMap<>();
+        if (this.userService.removeById(id))
+            response.putAll(Map.of("msg", String.format("User with id(%s) was deleted!", id)));
+        else
+            response.put("msg", String.format("There/'s no user with hte given id(%s)", id));
+        return response;
     }
 }

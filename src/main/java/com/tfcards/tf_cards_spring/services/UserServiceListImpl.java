@@ -2,6 +2,7 @@ package com.tfcards.tf_cards_spring.services;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -44,6 +45,14 @@ public class UserServiceListImpl implements IUserService {
     @Override
     public Set<UserTf> getAll() {
         return usersList;
+    }
+
+    @Override
+    public boolean removeById(String id) {
+        Boolean isRemoved = usersList.removeIf(u -> u.getId().equals(Long.valueOf(id)));
+        if (!isRemoved)
+            throw new RuntimeException(String.format("There/'s no user with the given id (%s)", id));
+        return isRemoved;
     }
 
 }
