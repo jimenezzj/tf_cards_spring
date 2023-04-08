@@ -51,7 +51,7 @@ public class UserServiceListImpl implements IUserService {
     public boolean removeById(String id) {
         Boolean isRemoved = usersList.removeIf(u -> u.getId().equals(Long.valueOf(id)));
         if (!isRemoved)
-            throw new RuntimeException(String.format("There/'s no user with the given id (%s)", id));
+            throw new UserNotFoundException(String.format("There\'s no user with the given id (%s)", id));
         return isRemoved;
     }
 
