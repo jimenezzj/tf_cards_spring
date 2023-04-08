@@ -7,12 +7,15 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,7 @@ import java.util.List;
 @Slf4j
 public class FiguresController {
 
+    private final String FIGURES_FORM = "figures/create";
     private IFiguresService figuresService;
 
     public FiguresController(IFiguresService pIFigureRepository) {
@@ -44,15 +48,21 @@ public class FiguresController {
 
     @RequestMapping(path = "/new")
     public String getFgFormPage(Model model) {
-        model.addAttribute("figure", new FigureCommand());
-        model.addAttribute("yearsList", List.of(2017, 2018, 2019, 2020, 2021, 2022, 2023));
-        return "figures/create";
+        model.addAttribute("figureCommand", new FigureCommand());
+        return FIGURES_FORM;
     }
 
     @RequestMapping(path = {"/", "", "/save", "/new"}, method = RequestMethod.POST)
-    public String createOrUpdateNewFigure(@ModelAttribute FigureCommand pFgCommand) {
-        var savedFg = this.figuresService.saveOrUpdateFigure(pFgCommand);
+    public String createOrUpdateNewFigure(@Valid @ModelAttribute FigureCommand figureCommand, BindingResult bindResult) {
+        if (bindResult.hasErrors()) {
+            log.debug("Invalid Figure");
+            bindResult.getAllErrors().forEach(err -> {
+                log.debug(err.toString());
+            });
+            return FIGURES_FORM;
+        }
         log.debug("Figure with id: %s was either saved or updated");
+        var savedFg = this.figuresService.saveOrUpdateFigure(figureCommand);
         return String.format("redirect:/figures/%1$d", savedFg.getId());
     }
 
@@ -61,7 +71,7 @@ public class FiguresController {
         var fgFound = this.figuresService.getByCommandId(Long.valueOf(pFgId));
         model.addAttribute("yearsList", List.of(2017, 2018, 2019, 2020, 2021, 2022, 2023));
         model.addAttribute("figure", fgFound);
-        return "figures/create";
+        return FIGURES_FORM;
     }
 
     @RequestMapping(path = "/image/{id}")

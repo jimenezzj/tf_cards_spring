@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Figure</title>
+</head>
+
+<body>
+    <style>
+        .form-fld {
+            display: flex;
+            padding: 1rem 0;
+        }
+
+        .form-fld>label {
+            margin-right: .5rem;
+            width: 6rem;
+        }
+
+        .form-fld>input,
+        .form-fld>select,
+        .form-fld>textarea {
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .tf-btn {
+            margin-top: 2rem;
+            margin-left: auto;
+            max-width: 200px;
+            /*display: flex;*/
+        }
+
+        form {
+            border: 3px solid transparent;
+        }
+
+        form.has-error {
+            border: 3px solid #9d0404;
+        }
+
+        input.has-error,
+        select.has-error,
+        textarea.has-error {
+            border: 2px solid #9d0404;
+            box-shadow: 0 0 0px 2px #eb7a7a;
+        }
+
+        .form-fld>div>small {
+            display: block;
+            padding: .25rem 0;
+            /*text-transform: capitalize;*/
+            color: #9d0404;
+        }
+
+        .form-general-err-msg {
+            display: none;
+        }
+
+        .form-general-err-msg.has-error {
+            display: block;
+            color: #9d0404;
+        }
+    </style>
+    <h1 th:text="#{tf.form.tlt}">Register New Figure</h1>
+    <div style="display: flex; max-width: 850px;">
+        <div style="flex-grow: 1;">
+            <h2 th:text="#{tf.form.essentials}" >Essentials:</h2>
+            <form th:object="${figureCommand}" th:action="@{/figures/save}" method="post" enctype="multipart/form-data">
+
+                <span th:class="${#fields.hasErrors('*')} ? 'form-general-err-msg has-error': 'form-general-err-msg'"
+                    class="form-general-err-msg">Some field are invalid</span>
+
+                <input type="hidden" th:field="*{id}" />
+                <div class="form-fld">
+                    <label th:text="#{tf.form.name.lbl}">Name:</label>
+                    <div>
+                        <input th:field="*{name}" type="text" th:errorclass="has-error"
+                            placeholder="Type a name of the figure..." />
+                        <small th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name').get(0)}"></small>
+                    </div>
+                </div>
+                <div class="form-fld">
+                    <label th:text="#{tf.form.releaseYear.lbl}">Release Year:</label>
+                    <div>
+                        <select th:field="*{releaseYear}" th:errorclass="has-error"
+                            th:with="releaseYears=${ {'2017', '2018', '2019', '2020', '2021', '2022', '2023'} }">
+                            <option value="0" disabled selected>Choose a year...</option>
+                            <option th:each="rYear: ${releaseYears }" th:value="${rYear}" th:text="${rYear}">Size
+                            </option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('releaseYear')}"
+                            th:text="${#fields.errors('releaseYear').get(0)}"></small>
+                    </div>
+                </div>
+                <div class="form-fld">
+                    <label th:text="#{tf.form.notes.lbl}">Notes:</label>
+                    <textarea th:field="*{notes.desc}" type="text" placeholder="Type a description for the figure..."
+                        rows="3"></textarea>
+                </div>
+                <div class="form-fld">
+                    <label th:text="#{tf.form.size.lbl}">Size:</label>
+                    <div>
+                        <select class="" th:field="*{size}">
+                            <option value="0" disabled selected>Choose a size...</option>
+                            <option th:each="size: ${T(com.tfcards.tf_cards_spring.domain.EFigureSize).values()}"
+                                th:value="${size.name()}" th:text="${size.getNormalizeVal()}">Size
+                            </option>
+                            <option th:remove="all">Core</option>
+                            <option th:remove="all">Deluxe</option>
+                            <option th:remove="all">Voyager</option>
+                            <option th:remove="all">Leader</option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('size')}" th:text="${#fields.errors('size').get(0)}"></small>
+                    </div>
+                </div>
+                <div class="form-fld">
+                    <label th:text="#{tf.form.image.lbl}" for="image">Select an image:</label>
+                    <div>
+                        <input type="file" name="image" id="image" />
+                        <small th:if="${#fields.hasErrors('image')}"
+                            th:text="${#fields.errors('image').get(0)}"></small>
+                    </div>
+                </div>
+                <button type="submit" class="tf-btn">Submit</button>
+            </form>
+        </div>
+        <div style="flex-grow: 1;">
+            <h2 th:text="#{}" >Accessories:</h2>
+
+        </div>
+    </div>
+</body>
+
+</html>

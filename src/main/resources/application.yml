@@ -30,3 +30,7 @@ com:
     jdbcurl: ymlLocalTfCardsDbSource
 server:
   port: 8082
+logging:
+  level:
+    com:
+      tfcards: debug
